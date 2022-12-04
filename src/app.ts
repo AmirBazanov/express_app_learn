@@ -1,13 +1,14 @@
 import express, {Express} from 'express'
 import {Server} from 'http'
 import {userRouter} from "./users/users.js";
+import {LoggerServes} from "./logger/logger.serves";
 
 export class App{
     app: Express;
     server: Server;
     port: number;
 
-    constructor() { 
+    constructor(logger: LoggerServes) {
         this.app = express();
         this.port = 8000;
     }
