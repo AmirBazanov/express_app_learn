@@ -2,19 +2,22 @@ import express, {Express} from 'express'
 import {Server} from 'http'
 import {LoggerService} from "./logger/loggerService";
 import {UsersController} from "./users/users.controller";
+import {ExceptionFilter} from "./errors/exception.filter";
 
 export class App {
     app: Express;
     server: Server;
     port: number;
     userController: UsersController;
+    exceptionFilter: ExceptionFilter;
     logger: LoggerService;
 
-    constructor(logger: LoggerService, userController: UsersController) {
+    constructor(logger: LoggerService, userController: UsersController, exceptionFilter: ExceptionFilter) {
         this.app = express();
         this.port = 8000;
         this.userController = userController
         this.logger = logger;
+        this.exceptionFilter = exceptionFilter;
     }
 
     useRoute() {
@@ -22,7 +25,7 @@ export class App {
     }
 
     useExceptionFilters() {
-
+        this.app.use(this.exceptionFilter.catch.bind(this))
     }
 
 
